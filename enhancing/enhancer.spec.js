@@ -96,6 +96,37 @@ describe('enhancer', () => {
         })
     })
     describe('get', () => {
-        it.todo("test some stuff")
+        it("if the enhancement level is 0, the the name is not modified.", () => {
+            expect(get({
+                name: "Spear",
+                enhancement: 0,
+                durability: 50
+            })).toStrictEqual({
+                name: "Spear",
+                enhancement: 0,
+                durability: 50
+            })
+        })
+        it("if the enhancement level is greater than 0, change the name to include the enhancement level, preceded by a '[+]' before the item's name. ", () => {
+            expect(get({
+                name: "Spear",
+                enhancement: 10,
+                durability: 50
+            })).toStrictEqual({
+                name: "[+] Spear",
+                enhancement: 10,
+                durability: 50
+            })
+            expect(get({
+                name: 1234,
+                enhancement: 10,
+                durability: 50
+            })).toStrictEqual({
+                name: "[+] 1234",
+                enhancement: 10,
+                durability: 50
+            })
+        })
+
     })
 })

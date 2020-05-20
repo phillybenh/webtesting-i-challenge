@@ -36,7 +36,7 @@ function fail(item) {
     }
   }
 }
-console.log(fail(numItem))
+// console.log(fail(numItem))
 
 function repair(item) {
   const repairItem = item
@@ -44,5 +44,9 @@ function repair(item) {
 }
 
 function get(item) {
-  return { ...item };
+  const getItem = item;
+  if (getItem.enhancement === 0) {
+    return getItem;
+  } else {
+    return { ...getItem, name: `[+] ${getItem.name}` };  }
 }
