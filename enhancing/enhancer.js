@@ -5,25 +5,42 @@ module.exports = {
   get,
 };
 
+const numItem = {
+  name: 541316,
+  enhancement: 20, // must be number between 0 and 20 inclusive
+  durability: 90 // must be a number between 0 and 100 inclusive
+}
+
 function succeed(item) {
-  ++item.enhancement
-  if (item.enhancement < 20) {
-    return { ...item };
+  const succeedItem = item;
+  ++succeedItem.enhancement
+  if (succeedItem.enhancement < 20) {
+    return { ...succeedItem };
   } else {
-    return { ...item, enhancement: 20 };
+    return { ...succeedItem, enhancement: 20 };
   }
 }
 
 function fail(item) {
-  if (item.enhancement < 15) {
-    item.durability -= 5;
-    return { ...item};
+  const failItem = item
+  if (failItem.enhancement < 15) {
+    failItem.durability -= 5;
+    return { ...failItem };
+  } else {
+    failItem.durability -= 10;
+    if (failItem.enhancement > 16) {
+      failItem.enhancement -= 1;
+      return { ...failItem };
+    } else {
+      return { ...failItem };
+    }
   }
-  return { ...item };
 }
+console.log(fail(numItem))
 
 function repair(item) {
-  return { ...item, durability: 100 };
+  const repairItem = item
+  return { ...repairItem, durability: 100 };
 }
 
 function get(item) {

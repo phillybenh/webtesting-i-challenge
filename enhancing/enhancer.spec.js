@@ -17,26 +17,35 @@ const numItem = {
 }
 
 describe('enhancer', () => {
+
     describe('repair', () => {
+        const repGoodItem = repair(goodItem);
+        const repStringItem = repair(stringItem);
+        const repNumItem = repair(numItem);
         // it.todo("repairs durrability to 100")
         it('repairs durability to 100', () => {
-            expect(repair(goodItem).durability).toBe(100)
+            expect(repGoodItem.durability).toBe(100)
         })
         it("repairs durability to 100 even if it's a string", () => {
-            expect(repair(stringItem).durability).toBe(100)
+            expect(repStringItem.durability).toBe(100)
         })
         it('returns a number for durability', () => {
-            expect(typeof repair(goodItem).durability).toBe("number")
-            expect(typeof repair(stringItem).durability).toBe("number")
+            expect(typeof repGoodItem.durability).toBe("number")
+            expect(typeof repStringItem.durability).toBe("number")
         })
         it('returns all three key:value pairs', () => {
-            expect(Object.keys(repair(goodItem))).toStrictEqual(["name", "enhancement", "durability"])
+            expect(Object.keys(repGoodItem)).toStrictEqual(["name", "enhancement", "durability"])
         })
     })
     describe('success', () => {
+
+        const sucGoodItem = succeed(goodItem);
+        const sucStringItem = succeed(stringItem);
+        const sucNumItem = succeed(numItem);
+
         it("item enhancement increased by 1", () => {
-            expect(succeed(goodItem).enhancement).toBe(11);
-            expect(succeed(stringItem).enhancement).toBe(11);
+            expect(sucGoodItem.enhancement).toBe(11);
+            expect(sucStringItem.enhancement).toBe(11);
 
         });
         it("when e-level is 20, it is unchanged", () => {
@@ -44,28 +53,47 @@ describe('enhancer', () => {
 
         });
         it("The durability of the item is not changed", () => {
-            expect(succeed(goodItem).durability).toBe(50);
+            expect(sucGoodItem.durability).toBe(50);
         })
         it('returns a number for enhamcement', () => {
-            expect(typeof succeed(goodItem).enhancement).toBe("number")
-            expect(typeof succeed(stringItem).enhancement).toBe("number")
+            expect(typeof sucGoodItem.enhancement).toBe("number")
+            expect(typeof sucStringItem.enhancement).toBe("number")
         })
         it('returns all three key:value pairs', () => {
-            expect(Object.keys(succeed(goodItem))).toStrictEqual(["name", "enhancement", "durability"])
+            expect(Object.keys(sucGoodItem)).toStrictEqual(["name", "enhancement", "durability"])
         })
 
     })
     describe('fail', () => {
-        it("If the item's enhancement is less than 15, the durability of the item is decreased by 5", () => {
-            expect(fail(goodItem).durability).toBe(45);
-            expect(fail(stringItem).durability).toBe(45);
 
+        const failGoodItem = fail(goodItem);
+        const failStringItem = fail(stringItem);
+        const failNumItem = fail(numItem);
+
+        it("If the item's enhancement is less than 15, the durability of the item is decreased by 5", () => {
+            expect(failGoodItem.durability).toBe(45);
+            expect(failStringItem.durability).toBe(45);
         })
 
-        it.todo("If the item's enhancement is 15 or more, the durability of the item is decreased by 10.")
+        it("If the item's enhancement is 15 or more, the durability of the item is decreased by 10.", () => {
+            expect(failNumItem.durability).toBe(80);
+        })
 
-        it.todo("If the item's enhancement level is greater than 16, the enhancement level decreases by 1")
-
+        it("If the item's enhancement level is greater than 16, the enhancement level decreases by 1", () => {
+            expect(fail({
+                name: 541316,
+                enhancement: 20, 
+                durability: 90 
+            }).enhancement).toBe(19);
+            expect(fail({
+                name: "Shield",
+                enhancement: 10,
+                durability: 50
+            }).enhancement).toBe(10);
+        })
+        it('returns all three key:value pairs', () => {
+            expect(Object.keys(failNumItem)).toStrictEqual(["name", "enhancement", "durability"])
+        })
     })
     describe('get', () => {
         it.todo("test some stuff")
